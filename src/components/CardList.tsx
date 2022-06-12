@@ -17,16 +17,25 @@ interface CardsProps {
 
 export function CardList({ cards }: CardsProps): JSX.Element {
   // TODO MODAL USEDISCLOSURE
+  const { isOpen, onClose } = useDisclosure();
 
   // TODO SELECTED IMAGE URL STATE
+  const [imageUrl, setImageUrl] = useState('');
 
   // TODO FUNCTION HANDLE VIEW IMAGE
+  const handleViewImage = (url: string): void => {
+    setImageUrl(url);
+  };
 
   return (
     <>
-      {/* TODO CARD GRID */}
+      <SimpleGrid column={4} spacing="40">
+        {cards.map(card => (
+          <Card key={card.id} data={card} viewImage={handleViewImage} />
+        ))}
+      </SimpleGrid>
 
-      {/* TODO MODALVIEWIMAGE */}
+      <ModalViewImage isOpen={isOpen} onClose={onClose} imgUrl={imageUrl} />
     </>
   );
 }
